@@ -38,8 +38,6 @@ const techCategories = [
       { name: "JavaScript", icon: SiJavascript },
       { name: "TailwindCSS", icon: SiTailwindcss },
       { name: "Framer Motion", icon: SiFramer },
-      { name: "HTML5", icon: SiHtml5 },
-      { name: "CSS3", icon: SiCss3 },
       { name: "Flutter", icon: SiFlutter },
     ],
   },
@@ -55,7 +53,6 @@ const techCategories = [
   {
     title: "Database",
     techs: [
-      { name: "MongoDB", icon: SiMongodb },
       { name: "PostgreSQL", icon: SiPostgresql },
       { name: "Firebase", icon: SiFirebase },
     ],
@@ -63,7 +60,6 @@ const techCategories = [
   {
     title: "Tools & Others",
     techs: [
-      { name: "Git", icon: SiGit },
       { name: "GitHub", icon: SiGithub },
       { name: "Figma", icon: SiFigma },
       { name: "Docker", icon: SiDocker },
@@ -82,7 +78,7 @@ export function TechStack() {
       {/* Background */}
       {/* Background Effects */}
       <div className="absolute inset-0 bg-dots opacity-20" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
@@ -114,7 +110,7 @@ export function TechStack() {
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
             >
               <h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-white">
-                <span className="w-2 h-2 rounded-full bg-orange-400" />
+                <span className="w-2 h-2 rounded-full bg-blue-light" />
                 {category.title}
               </h3>
               

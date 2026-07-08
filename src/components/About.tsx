@@ -27,7 +27,7 @@ export function About() {
       {/* Background */}
       {/* Background Effects */}
       <div className="absolute inset-0 bg-dots opacity-20" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
@@ -59,11 +59,11 @@ export function About() {
           >
             <div className="relative w-full max-w-md mx-auto">
               {/* Decorative elements */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-white/20 to-purple-500/20 rounded-2xl blur-2xl opacity-50" />
+              <div className="absolute -inset-4 bg-white/5 rounded-2xl blur-xl opacity-30" />
               
               {/* Main Image Container */}
               <div className="relative glass-card rounded-2xl p-8 overflow-hidden">
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-white/10 to-purple-500/10 flex items-center justify-center">
+                <div className="aspect-square rounded-xl bg-white/5 flex items-center justify-center">
                   <User className="w-32 h-32 text-white/30" />
                 </div>
                 
@@ -118,14 +118,14 @@ export function About() {
             {/* Quick Info */}
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-3 p-3 rounded-lg glass-card">
-                <MapPin className="w-5 h-5 text-orange-400" />
+                <MapPin className="w-5 h-5 text-blue-light" />
                 <div>
                   <div className="text-xs text-white/60">Location</div>
                   <div className="text-sm font-medium text-white">Your City, Country</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg glass-card">
-                <Calendar className="w-5 h-5 text-orange-400" />
+                <Calendar className="w-5 h-5 text-blue-light" />
                 <div>
                   <div className="text-xs text-white/60">Experience</div>
                   <div className="text-sm font-medium text-white">1+ Years</div>
@@ -144,7 +144,7 @@ export function About() {
                   className="flex items-center gap-3"
                 >
                   <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                    <item.icon className="w-4 h-4 text-orange-400" />
+                    <item.icon className="w-4 h-4 text-blue-light" />
                   </div>
                   <span className="text-sm text-white">{item.text}</span>
                 </motion.div>

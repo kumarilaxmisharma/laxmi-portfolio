@@ -2,75 +2,54 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { ExternalLink, Github, Folder, ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description:
-      "A full-stack e-commerce platform with product management, cart functionality, and secure payment integration.",
-    image: "/api/placeholder/600/400",
-    tags: ["Next.js", "TypeScript", "Stripe", "MongoDB"],
+    title: "Denteeth",
+    type: "AI Dental Assistant",
+    description: "A framework focused on zero re-renders for React apps, optimising performance.",
+    image: "/Denteeth.png",
+    tags: ["React", "TypeScript", "Performance"],
+    category: "frontend",
+    link: "https://denteeth.pages.dev/",
+    linkLabel: "View on GitHub",
+    glowColor: "rgba(99, 102, 241, 0.25)", // Indigo glow
+  },
+  {
+    title: "Bespoke",
+    type: "Automotive Styling",
+    description: "Premium wrap and protection booking dashboard with interactive customizer.",
+    image: "/project-tasks.jpg",
+    tags: ["Next.js", "TailwindCSS", "Framer Motion"],
+    category: "frontend",
+    link: "https://github.com/kumarilaxmisharma",
+    linkLabel: "View Case Study",
+    glowColor: "rgba(147, 51, 234, 0.25)", // Purple glow
+  },
+  {
+    title: "Automedics",
+    type: "Automotive Repair",
+    description: "A digital booking and diagnostics hub for automated vehicle repairs.",
+    image: "/project-portfolio.jpg",
+    tags: ["Next.js", "PostgreSQL", "Node.js"],
     category: "fullstack",
-    github: "https://github.com",
-    live: "https://example.com",
-    featured: true,
+    link: "https://github.com/kumarilaxmisharma",
+    linkLabel: "View Case Study",
+    glowColor: "rgba(245, 158, 11, 0.25)", // Amber glow
   },
   {
-    title: "Task Management App",
-    description:
-      "A collaborative task management application with real-time updates, drag-and-drop, and team features.",
-    image: "/api/placeholder/600/400",
-    tags: ["React", "Firebase", "TailwindCSS"],
-    category: "frontend",
-    github: "https://github.com",
-    live: "https://example.com",
-    featured: true,
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern, responsive portfolio website showcasing projects and skills with stunning animations.",
-    image: "/api/placeholder/600/400",
-    tags: ["Next.js", "Framer Motion", "TailwindCSS"],
-    category: "frontend",
-    github: "https://github.com",
-    live: "https://example.com",
-    featured: true,
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "Real-time weather application with location-based forecasts, interactive maps, and weather alerts.",
-    image: "/api/placeholder/600/400",
-    tags: ["React", "API Integration", "Chart.js"],
-    category: "frontend",
-    github: "https://github.com",
-    featured: false,
-  },
-  {
-    title: "Blog Platform",
-    description:
-      "A content management system with markdown support, comments, and social sharing features.",
-    image: "/api/placeholder/600/400",
-    tags: ["Next.js", "MDX", "PostgreSQL"],
+    title: "tinh mac ecommerce",
+    type: "E-commerce",
+    description: "Ecommerce website for Mac products with real-time stock updates and user authentication.",
+    image: "/project-weather.jpg",
+    tags: ["React", "Tailwind", "Sadcn"],
     category: "fullstack",
-    github: "https://github.com",
-    live: "https://example.com",
-    featured: false,
-  },
-  {
-    title: "API REST Service",
-    description:
-      "RESTful API service with authentication, rate limiting, and comprehensive documentation.",
-    image: "/api/placeholder/600/400",
-    tags: ["Node.js", "Express", "JWT"],
-    category: "backend",
-    github: "https://github.com",
-    featured: false,
+    link: "https://tinh-mac-new.vercel.app",
+    linkLabel: "View Case Study",
+    glowColor: "rgba(20, 184, 166, 0.25)", // Teal glow
   },
 ];
 
@@ -78,7 +57,6 @@ const categories = [
   { id: "all", label: "All Projects" },
   { id: "frontend", label: "Frontend" },
   { id: "fullstack", label: "Full Stack" },
-  { id: "backend", label: "Backend" },
 ];
 
 export function Projects() {
@@ -92,12 +70,11 @@ export function Projects() {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      {/* Background */}
+    <section id="projects" className="py-24 relative overflow-hidden bg-background">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-grid opacity-20" />
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -107,7 +84,7 @@ export function Projects() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-orange-500/20 text-orange-300 border-orange-500/30 hover:bg-orange-500/30">
+          <Badge className="mb-4 bg-blue/20 text-blue-light border-blue/30 hover:bg-blue/30">
             Portfolio
           </Badge>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
@@ -133,8 +110,8 @@ export function Projects() {
               onClick={() => setActiveCategory(category.id)}
               className={
                 activeCategory === category.id
-                  ? "bg-white text-blue-600 hover:bg-white/90 border-0"
-                  : "border-white/30 text-white hover:bg-white/10 hover:text-white"
+                  ? "bg-white text-blue hover:bg-white/90 border-0 cursor-pointer"
+                  : "border-white/30 text-white hover:bg-white/10 hover:text-white cursor-pointer"
               }
             >
               {category.label}
@@ -145,82 +122,64 @@ export function Projects() {
         {/* Projects Grid */}
         <motion.div
           layout
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 gap-8"
         >
           {filteredProjects.map((project, index) => (
-            <motion.div
+            <motion.a
               key={project.title}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               layout
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative aspect-[4/3] rounded-[2rem] overflow-hidden group cursor-pointer block border border-white/10 hover:border-white/20 transition-colors duration-300 shadow-2xl bg-transparent"
             >
-              <Card className="glass-card border-white/10 hover:border-white/30 transition-all duration-300 hover-lift h-full group overflow-hidden bg-transparent">
-                {/* Project Image */}
-                <div className="relative h-48 bg-gradient-to-br from-white/10 to-purple-500/10 overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Folder className="w-16 h-16 text-white/20" />
-                  </div>
-                  
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/90 via-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                    <div className="flex gap-3">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-blue-600 transition-colors"
-                      >
-                        <Github className="w-5 h-5" />
-                      </a>
-                      {project.live && (
-                        <a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-orange-400 hover:text-white transition-colors"
-                        >
-                          <ExternalLink className="w-5 h-5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
+              {/* Image background with scale zoom on hover */}
+              <div className="absolute inset-0 w-full h-full overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
 
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className="absolute top-3 right-3">
-                      <Badge className="bg-orange-500 text-white border-0 text-xs">
-                        Featured
-                      </Badge>
-                    </div>
-                  )}
-                </div>
+              {/* Ambient bottom-left gradient glow overlay */}
+              <div 
+                className="absolute inset-0 pointer-events-none transition-opacity duration-500 opacity-60 group-hover:opacity-100" 
+                style={{
+                  background: `radial-gradient(circle at bottom left, ${project.glowColor} 0%, transparent 60%)`
+                }}
+              />
 
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg text-white group-hover:text-orange-300 transition-colors flex items-center gap-2">
-                    {project.title}
-                    <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </CardTitle>
-                  <CardDescription className="text-white/60 line-clamp-2">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
+              {/* Dark shading overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-black/10" />
 
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/80 border border-white/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+              {/* Card Contents */}
+              
+              {/* Top Left Badge */}
+              <div className="absolute top-6 left-6">
+                <span className="px-4 py-2 rounded-full bg-[#0c0c0e]/95 border border-white/5 text-white/90 text-[11px] font-medium tracking-wide">
+                  {project.type}
+                </span>
+              </div>
+
+              {/* Bottom Info bar */}
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                <h3 className="text-2xl font-semibold text-white tracking-tight">
+                  {project.title}
+                </h3>
+                <span className="flex items-center gap-1.5 text-sm font-medium text-white/90 transition-colors">
+                  <span>{project.linkLabel}</span>
+                  <ArrowUpRight className="w-4.5 h-4.5 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </span>
+              </div>
+            </motion.a>
           ))}
         </motion.div>
 
@@ -228,13 +187,13 @@ export function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="text-center mt-16"
         >
           <Button
             variant="outline"
             size="lg"
-            className="border-white/30 text-white hover:bg-white/10 group"
+            className="border-white/30 text-white hover:bg-white/10 group cursor-pointer"
           >
             View All Projects
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

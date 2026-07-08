@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
@@ -18,16 +15,62 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 
+const socialLinks = [
+  { name: "GitHub", href: "https://github.com/kumarilaxmisharma" },
+  { name: "LinkedIn", href: "https://linkedin.com/in/kumari-laxmi-sharma-682433187" },
+  { name: "Telegram", href: "https://t.me/Kumarilaxmisharma" },
+];
+
+const backdropVariants = {
+  closed: { opacity: 0 },
+  opened: { opacity: 1 },
+};
+
+const menuVariants = {
+  closed: {
+    x: "100%",
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+      staggerChildren: 0.05,
+      staggerDirection: -1,
+    },
+  },
+  opened: {
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      staggerChildren: 0.07,
+      delayChildren: 0.1,
+    },
+  },
+} as const;
+
+const linkVariants = {
+  closed: {
+    x: 50,
+    opacity: 0,
+  },
+  opened: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 25,
+    },
+  },
+} as const;
+
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      // Update active section based on scroll position
       const sections = navItems.map((item) => item.href.replace("#", ""));
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -46,120 +89,152 @@ export function Navbar() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.replace("#", ""));
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
     setIsOpen(false);
+    // Add a tiny delay so the drawer closing animation starts before we scroll
+    setTimeout(() => {
+      const element = document.getElementById(href.replace("#", ""));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 300);
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "glass py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <nav className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <motion.a
+    <>
+      {/* Brand logo fixed in the top-left */}
+      <div className="fixed top-6 left-6 z-50">
+        <a
           href="#home"
-          className="flex items-center gap-2 group"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
           onClick={(e) => {
             e.preventDefault();
             scrollToSection("#home");
           }}
+          className="flex items-center gap-2 group"
         >
-          <div className="relative w-10 h-10 rounded-lg overflow-hidden group-hover:shadow-lg group-hover:shadow-white/30 transition-shadow">
+          <div className="relative w-10 h-10 rounded-lg overflow-hidden transition-all duration-300 bg-white/5 border border-white/10 group-hover:scale-105">
             <Image src="/2.svg" alt="Laxmi Logo" width={40} height={40} className="w-full h-full object-cover" />
           </div>
-          
-        </motion.a>
+        </a>
+      </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1">
-          {navItems.map((item) => (
-            <motion.button
-              key={item.name}
-              onClick={() => scrollToSection(item.href)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all relative ${
-                activeSection === item.href.replace("#", "")
-                  ? "text-white"
-                  : "text-white/70 hover:text-white"
+      {/* Top right buttons (ThemeToggle + Hamburger menu trigger) */}
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        <ThemeToggle />
+        
+        {/* Floating circular hamburger button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`relative w-12 h-12 rounded-full flex flex-col items-center justify-center transition-all duration-300 shadow-lg border outline-none group cursor-pointer z-50 ${
+            isOpen
+              ? "bg-blue border-blue text-white"
+              : "bg-white border-slate-200 text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          }`}
+          aria-label="Toggle menu"
+        >
+          <div className="flex flex-col gap-1.5 items-center justify-center">
+            <motion.span
+              animate={isOpen ? { rotate: 45, y: 4.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`w-6 h-[2px] rounded-full transition-colors ${
+                isOpen ? "bg-white" : "bg-slate-900 dark:bg-white"
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            />
+            <motion.span
+              animate={isOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className={`w-6 h-[2px] rounded-full transition-colors ${
+                isOpen ? "bg-white" : "bg-slate-900 dark:bg-white"
+              }`}
+            />
+          </div>
+        </button>
+      </div>
+
+      {/* Full-screen menu overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial="closed"
+              animate="opened"
+              exit="closed"
+              variants={backdropVariants}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 cursor-pointer"
+              transition={{ duration: 0.3 }}
+            />
+
+            {/* Menu drawer */}
+            <motion.div
+              initial="closed"
+              animate="opened"
+              exit="closed"
+              variants={menuVariants}
+              className="fixed top-0 right-0 h-screen w-full sm:w-[450px] bg-slate-950 border-l border-white/10 z-40 flex flex-col justify-between p-8 sm:p-12 shadow-2xl overflow-y-auto"
             >
-              {activeSection === item.href.replace("#", "") && (
-                <motion.div
-                  layoutId="activeNav"
-                  className="absolute inset-0 bg-white/20 rounded-full"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{item.name}</span>
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Theme Toggle & CTA Button */}
-        <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle />
-          <Button
-            onClick={() => scrollToSection("#contact")}
-            className="bg-white text-blue-600 hover:bg-white/90 transition-opacity font-semibold dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-          >
-            Let&apos;s Talk
-          </Button>
-        </div>
-
-        {/* Mobile Menu */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-              <Menu className="w-6 h-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="glass border-white/20 w-[300px] dark:bg-slate-900/95 dark:border-slate-700/50">
-            <div className="flex flex-col gap-4 mt-8">
-              {/* Theme Toggle in Mobile */}
-              <div className="flex items-center justify-between px-4 py-2">
-                <span className="text-white/70 text-sm">Theme</span>
-                <ThemeToggle />
+              {/* Top Padding to clear the floating buttons */}
+              <div className="pt-20">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 block mb-8">
+                  Navigation
+                </span>
+                
+                <nav className="flex flex-col gap-4">
+                  {navItems.map((item) => {
+                    const isActive = activeSection === item.href.replace("#", "");
+                    return (
+                      <motion.div key={item.name} variants={linkVariants}>
+                        <button
+                          onClick={() => scrollToSection(item.href)}
+                          className="group relative flex items-center text-4xl sm:text-5xl font-bold text-left outline-none py-1 cursor-pointer w-full"
+                        >
+                          <span className={`transition-all duration-300 ${
+                            isActive
+                              ? "text-blue-light pl-6"
+                              : "text-white hover:text-blue-light hover:pl-6"
+                          }`}>
+                            {item.name}
+                          </span>
+                          
+                          {/* Dot indicator */}
+                          {isActive && (
+                            <motion.span
+                              layoutId="activeDot"
+                              className="absolute left-0 w-2.5 h-2.5 rounded-full bg-blue"
+                              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            />
+                          )}
+                        </button>
+                      </motion.div>
+                    );
+                  })}
+                </nav>
               </div>
-              <div className="h-px bg-white/10 dark:bg-slate-700/50" />
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.name}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`text-left px-4 py-3 rounded-lg text-lg font-medium transition-all ${
-                    activeSection === item.href.replace("#", "")
-                      ? "bg-white/20 text-white dark:bg-slate-700/50"
-                      : "text-white/70 hover:text-white hover:bg-white/10 dark:hover:bg-slate-700/30"
-                  }`}
-                >
-                  {item.name}
-                </motion.button>
-              ))}
-              <Button
-                onClick={() => scrollToSection("#contact")}
-                className="mt-4 bg-white text-blue-600 hover:bg-white/90 font-semibold dark:bg-slate-100 dark:text-slate-900"
-              >
-                Let&apos;s Talk
-              </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </nav>
-    </motion.header>
+
+              {/* Socials Section */}
+              <div className="mt-12 pt-6 border-t border-white/5">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 block mb-4">
+                  Socials
+                </span>
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {socialLinks.map((social) => (
+                    <motion.a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-white/60 hover:text-white transition-colors cursor-pointer"
+                      whileHover={{ y: -2 }}
+                    >
+                      {social.name}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

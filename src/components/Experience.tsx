@@ -57,9 +57,24 @@ const education = [
 ];
 
 const certifications = [
-  { name: "React Developer Certification", issuer: "Meta", year: "2024" },
-  { name: "JavaScript Algorithms", issuer: "freeCodeCamp", year: "2023" },
-  { name: "Responsive Web Design", issuer: "freeCodeCamp", year: "2023" },
+  { 
+    name: "React Developer Certification", 
+    issuer: "Coursera", 
+    year: "2024",
+    link: "https://www.coursera.org" // Placeholder, you can update this link later
+  },
+  { 
+    name: "Fundamental of Project Management", 
+    issuer: "freeCodeCamp", 
+    year: "2023",
+    link: "https://coursera.org/share/a876a9eef52d50b89384fb84b77b2b71"
+  },
+  { 
+    name: "Responsive Web Design", 
+    issuer: "freeCodeCamp", 
+    year: "2023",
+    link: "https://www.freecodecamp.org"
+  },
 ];
 
 export function Experience() {
@@ -77,7 +92,7 @@ export function Experience() {
       {/* Background */}
       {/* Background Effects */}
       <div className="absolute inset-0 bg-dots opacity-20" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
@@ -104,7 +119,7 @@ export function Experience() {
           <div className="lg:col-span-2">
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-orange-400 via-white/50 to-white/20" />
+              <div className="absolute left-8 top-0 bottom-0 w-px bg-blue/50" />
 
               {/* Experience Items */}
               <div className="space-y-8">
@@ -120,7 +135,7 @@ export function Experience() {
                     <div
                       className={`absolute left-4 w-8 h-8 rounded-full flex items-center justify-center ${
                         exp.current
-                          ? "bg-gradient-to-r from-orange-400 to-orange-500 animate-pulse-glow"
+                          ? "bg-blue shadow-md"
                           : "bg-white/10 border-2 border-white/30"
                       }`}
                     >
@@ -135,7 +150,7 @@ export function Experience() {
                     <div className="p-6 rounded-2xl glass-card hover:border-white/30 transition-all group">
                       <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                         <div>
-                          <h3 className="text-xl font-semibold text-white group-hover:text-orange-300 transition-colors">
+                          <h3 className="text-xl font-semibold text-white group-hover:text-blue-light transition-colors">
                             {exp.title}
                           </h3>
                           <p className="text-white/60">{exp.company}</p>
@@ -163,7 +178,7 @@ export function Experience() {
                       <ul className="space-y-2">
                         {exp.achievements.map((achievement, i) => (
                           <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-light mt-2 shrink-0" />
                             {achievement}
                           </li>
                         ))}
@@ -184,21 +199,24 @@ export function Experience() {
             <div className="sticky top-24 space-y-6">
               <div className="p-6 rounded-2xl glass-card">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                  <span className="w-2 h-2 rounded-full bg-orange-400" />
+                  <span className="w-2 h-2 rounded-full bg-blue-light" />
                   Certifications
                 </h3>
                 <div className="space-y-4">
                   {certifications.map((cert, index) => (
-                    <motion.div
+                    <motion.a
                       key={cert.name}
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       initial={{ opacity: 0, y: 10 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ delay: 0.5 + index * 0.1 }}
-                      className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
+                      className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer block"
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <h4 className="font-medium text-sm text-white group-hover:text-orange-300 transition-colors">
+                          <h4 className="font-medium text-sm text-white group-hover:text-blue-light transition-colors">
                             {cert.name}
                           </h4>
                           <p className="text-xs text-white/60 mt-1">
@@ -207,7 +225,7 @@ export function Experience() {
                         </div>
                         <ExternalLink className="w-4 h-4 text-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
-                    </motion.div>
+                    </motion.a>
                   ))}
                 </div>
               </div>

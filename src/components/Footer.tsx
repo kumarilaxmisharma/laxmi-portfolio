@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Send, ArrowUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Github, Linkedin, Send } from "lucide-react";
 
 const footerLinks = {
   navigation: [
@@ -14,17 +12,13 @@ const footerLinks = {
     { name: "Contact", href: "#contact" },
   ],
   social: [
-    { icon: Github, href: "https://github.com/kumarilaxmisharma", label: "GitHub" },
     { icon: Linkedin, href: "https://www.linkedin.com/in/kumari-laxmi-sharma-682433187", label: "LinkedIn" },
-    { icon: Send, href: "https://t.me/kumarilaxmisharma", label: "Send" },
+    { icon: Github, href: "https://github.com/kumarilaxmisharma", label: "GitHub" },
+    { icon: Send, href: "https://t.me/kumarilaxmisharma", label: "Telegram" },
   ],
 };
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const scrollToSection = (href: string) => {
     const element = document.getElementById(href.replace("#", ""));
     if (element) {
@@ -33,97 +27,83 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative pt-24 pb-8 overflow-hidden">
-      {/* Background */}
+    <footer className="relative pt-24 overflow-hidden bg-background">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-dots opacity-20" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px]" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="absolute inset-0 bg-dots opacity-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Main Footer Content */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg overflow-hidden">
-                <Image src="/2.svg" alt="Laxmi Logo" width={40} height={40} className="w-full h-full object-cover" />
-              </div>
-              
+        {/* Large Editorial Heading */}
+        <div className="mb-16 md:mb-24">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]">
+            Lets create
+            <br />
+            <span className="text-white/35">incredible work together.</span>
+          </h2>
+        </div>
+
+        {/* Middle Info Row */}
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-8 pb-12 border-b border-white/10">
+          {/* Email Info */}
+          <div className="space-y-2">
+            <span className="text-xs uppercase tracking-[0.2em] text-white/40 block">Email</span>
+            <a
+              href="mailto:kumarilaxmisharma34@gmail.com"
+              className="text-lg md:text-xl text-white hover:text-blue-light transition-colors font-medium"
+            >
+              kumarilaxmisharma34@gmail.com
             </a>
-            <p className="text-white/60 mb-6 max-w-md">
-              A passionate junior software developer dedicated to creating beautiful, 
-              functional, and user-friendly web and mobile applications.
-            </p>
-            <div className="flex gap-3">
+          </div>
+
+          {/* Socials Info */}
+          <div className="space-y-3 sm:text-right">
+            <span className="text-xs uppercase tracking-[0.2em] text-white/40 block sm:text-right">Socials</span>
+            <div className="flex gap-3 justify-start sm:justify-end">
               {footerLinks.social.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg glass-card flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                  className="w-10 h-10 rounded-full bg-white text-slate-950 flex items-center justify-center hover:bg-white/80 transition-all shadow-md group cursor-pointer"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-4 h-4" />
+                  <social.icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 </a>
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold mb-4 text-white">Quick Links</h3>
-            <ul className="space-y-3">
-              {footerLinks.navigation.map((link) => (
-                <li key={link.name}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-white/60 hover:text-orange-300 transition-colors"
-                  >
-                    {link.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+        {/* Nav Links and Small Info bar */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pt-12 pb-16">
+          {/* Horizontal Navigation List */}
+          <div className="flex flex-wrap gap-x-8 gap-y-2">
+            {footerLinks.navigation.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => scrollToSection(link.href)}
+                className="text-sm font-medium text-white/70 hover:text-white transition-colors cursor-pointer"
+              >
+                {link.name}
+              </button>
+            ))}
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="font-semibold mb-4 text-white">Contact</h3>
-            <ul className="space-y-3 text-white/60">
-              <li>
-                <a href="mailto:kumarilaxmisharma34@gmail.com" className="hover:text-orange-300 transition-colors">
-                  kumarilaxmisharma34@gmail.com
-                </a>
-              </li>
-              <li>Phnom Penh, Cambodia</li>
-              <li className="text-orange-300">Available for freelance</li>
-            </ul>
+          {/* Location & Copyright */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-x-12 gap-y-2 text-sm text-white/40 w-full md:w-auto justify-between">
+            <p>Based in Phnom Penh, Cambodia</p>
+            <p>© {new Date().getFullYear()} Kumari Laxmi Sharma</p>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-white/60 flex items-center gap-1">
-              © {new Date().getFullYear()} Kumari Laxmi Sharma. All Rights Reserved.  
-            </p>
-
-            {/* Back to Top Button */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                onClick={scrollToTop}
-                variant="outline"
-                size="sm"
-                className="border-white/30 text-white hover:bg-white/10 group"
-              >
-                <ArrowUp className="w-4 h-4 mr-2 group-hover:-translate-y-1 transition-transform" />
-                Back to Top
-              </Button>
-            </motion.div>
-          </div>
+        {/* Oversized Background Watermark Name */}
+        <div className="w-full h-[10.5vw] overflow-hidden pointer-events-none select-none flex items-end justify-center">
+          <h1 className="text-[13vw] font-bold tracking-tighter text-white leading-none translate-y-[2vw] whitespace-nowrap">
+            Laxmi Sharma
+          </h1>
         </div>
       </div>
     </footer>

@@ -45,9 +45,8 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Github, label: "GitHub", href: "https://github.com" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+  { icon: Github, label: "GitHub", href: "https://github.com/kumarilaxmisharma" },
+  { icon: Linkedin, label: "LinkedIn", href: "www.linkedin.com/in/kumari-laxmi-sharma-682433187" },
 ];
 
 export function Contact() {
@@ -112,7 +111,7 @@ export function Contact() {
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-20" />
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -122,7 +121,7 @@ export function Contact() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-orange-500/20 text-orange-300 border-orange-500/30 hover:bg-orange-500/30">
+          <Badge className="mb-4 bg-blue/20 text-blue-light border-blue/30 hover:bg-blue/30">
             Contact
           </Badge>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
@@ -159,12 +158,12 @@ export function Contact() {
                   transition={{ delay: 0.3 + index * 0.1 }}
                   className="flex items-center gap-4 p-4 rounded-xl glass-card hover:border-white/30 transition-all group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-orange-500 transition-all">
-                    <item.icon className="w-5 h-5 text-orange-400 group-hover:text-white transition-colors" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-blue transition-all">
+                    <item.icon className="w-5 h-5 text-blue-light group-hover:text-white transition-colors" />
                   </div>
                   <div>
                     <div className="text-sm text-white/60">{item.label}</div>
-                    <div className="font-medium text-white group-hover:text-orange-300 transition-colors">
+                    <div className="font-medium text-white group-hover:text-blue-light transition-colors">
                       {item.value}
                     </div>
                   </div>
@@ -217,7 +216,7 @@ export function Contact() {
                         value={formState.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 outline-none transition-all placeholder:text-white/40 text-white"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-blue focus:ring-2 focus:ring-blue/20 outline-none transition-all placeholder:text-white/40 text-white"
                         placeholder="John Doe"
                       />
                     </div>
@@ -232,7 +231,7 @@ export function Contact() {
                         value={formState.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 outline-none transition-all placeholder:text-white/40 text-white"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-blue focus:ring-2 focus:ring-blue/20 outline-none transition-all placeholder:text-white/40 text-white"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -249,7 +248,7 @@ export function Contact() {
                       value={formState.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 outline-none transition-all placeholder:text-white/40 text-white"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-blue focus:ring-2 focus:ring-blue/20 outline-none transition-all placeholder:text-white/40 text-white"
                       placeholder="Project Collaboration"
                     />
                   </div>
@@ -265,7 +264,7 @@ export function Contact() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 outline-none transition-all placeholder:text-white/40 text-white resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/20 focus:border-blue focus:ring-2 focus:ring-blue/20 outline-none transition-all placeholder:text-white/40 text-white resize-none"
                       placeholder="Tell me about your project..."
                     />
                   </div>
@@ -280,7 +279,7 @@ export function Contact() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || isSubmitted}
-                    className="w-full bg-white text-blue-600 hover:bg-white/90 transition-opacity h-12 text-base font-semibold"
+                    className="w-full bg-white text-blue hover:bg-white/90 transition-opacity h-12 text-base font-semibold"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">

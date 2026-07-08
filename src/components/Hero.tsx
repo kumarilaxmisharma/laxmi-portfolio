@@ -15,11 +15,8 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#3b5eff] via-[#4361ee] to-[#3a0ca3] dark:from-[#0f172a] dark:via-[#1e293b] dark:to-[#0f172a]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background"
     >
-      {/* Background Gradient Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.4),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(96,165,250,0.2),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.3),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(167,139,250,0.15),transparent_50%)]" />
 
       {/* Large Glassmorphic Background Text */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
@@ -29,7 +26,7 @@ export function Hero() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative"
         >
-          <h1 className="text-[12vw] md:text-[14vw] lg:text-[180px] font-black tracking-tighter select-none whitespace-nowrap"
+          <h1 className="text-[12vw] md:text-[14vw] lg:text-[180px] font-bold tracking-tighter select-none whitespace-nowrap"
             style={{
               WebkitTextStroke: '2px rgba(255,255,255,0.15)',
               WebkitTextFillColor: 'transparent',
@@ -41,46 +38,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Orbital Rings */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {/* Ring 1 - Large */}
-        <motion.div
-          initial={{ opacity: 0, rotate: -15 }}
-          animate={{ opacity: 1, rotate: -15 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="absolute w-[90vw] md:w-[70vw] lg:w-[900px] aspect-[3/1]"
-        >
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            className="w-full h-full"
-          >
-            <div 
-              className="w-full h-full rounded-[50%] border-2 border-white/40"
-              style={{ transform: 'rotateX(70deg)' }}
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Ring 2 - Medium */}
-        <motion.div
-          initial={{ opacity: 0, rotate: 20 }}
-          animate={{ opacity: 1, rotate: 20 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="absolute w-[70vw] md:w-[55vw] lg:w-[700px] aspect-[2.5/1]"
-        >
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="w-full h-full"
-          >
-            <div 
-              className="w-full h-full rounded-[50%] border border-white/25"
-              style={{ transform: 'rotateX(75deg)' }}
-            />
-          </motion.div>
-        </motion.div>
-      </div>
+      {/* Ring decorations removed for flat clean look */}
 
       {/* Floating Orange Badge */}
       <motion.div
@@ -92,7 +50,7 @@ export function Hero() {
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/30"
+          className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-blue flex items-center justify-center shadow-md"
         >
           <div className="text-center">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white mx-auto" />
@@ -119,7 +77,7 @@ export function Hero() {
                 transition={{ delay: i * 0.1 }}
                 className="flex items-center gap-2"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-light" />
                 {item}
               </motion.span>
             ))}
@@ -132,12 +90,12 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-center mb-12"
           >
-            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-4"
-              style={{ textShadow: '0 4px 30px rgba(0,0,0,0.3)' }}
+            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-4"
+              style={{ textShadow: '0 4px 30px rgba(0,0,0,0.2)' }}
             >
               KUMARI LAXMI
               <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white">
+              <span className="text-white">
                 SHARMA
               </span>
             </h2>
@@ -180,7 +138,7 @@ export function Hero() {
             <Button
               size="lg"
               onClick={() => scrollToSection("#projects")}
-              className="bg-white text-blue-600 hover:bg-white/90 transition-all shadow-lg shadow-white/20 px-8 font-semibold"
+              className="bg-white text-blue hover:bg-white/90 transition-all shadow-lg shadow-white/20 px-8 font-semibold"
             >
               View My Work
               <ArrowDown className="w-4 h-4 ml-2" />
