@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 const experiences = [
   {
     type: "work",
-    title: "Project Manager",
+    title: "Technical Project Coordinator",
     company: "Dojology Tech & Venture",
     location: "Phnom Penh, Cambodia",
     period: "2026 - Present",
