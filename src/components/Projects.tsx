@@ -26,7 +26,7 @@ const projects = [
     tags: ["React", "TypeScript", "Performance"],
     category: "frontend",
     link: "https://denteeth.pages.dev/",
-    linkLabel: "View on GitHub",
+    linkLabel: "View On Web",
     glowColor: "rgba(99, 102, 241, 0.25)", // Indigo glow
   },
 
@@ -38,7 +38,7 @@ const projects = [
     tags: ["React", "Tailwind", "Sadcn"],
     category: "fullstack",
     link: "https://tinh-mac-new.vercel.app",
-    linkLabel: "View Case Study",
+    linkLabel: "View On Web",
     glowColor: "rgba(20, 184, 166, 0.25)", // Teal glow
   },
 ];

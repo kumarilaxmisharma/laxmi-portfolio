@@ -23,7 +23,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
           className="relative"
         >
           <h1 className="text-[12vw] md:text-[14vw] lg:text-[180px] font-bold tracking-tighter select-none whitespace-nowrap"
@@ -66,7 +66,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
             className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16 text-white/70 text-sm"
           >
             {["Web Development", "Flutter", "React & Next.js", "TypeScript", "Modern Stack"].map((item, i) => (
@@ -87,7 +87,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             className="text-center mb-12"
           >
             <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-4"
@@ -105,7 +105,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 1 }}
             className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-12 text-white"
           >
             <div className="text-center">

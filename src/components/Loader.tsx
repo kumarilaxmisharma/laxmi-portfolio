@@ -42,12 +42,13 @@ export function Loader({ onComplete }: LoaderProps) {
     <AnimatePresence>
       {active && (
         <motion.div
-          initial={{ opacity: 1 }}
+          initial={{ opacity: 1, y: 0 }}
           exit={{ 
-            opacity: 0,
-            transition: { duration: 0.8, ease: "easeInOut" } 
+            y: "-100vh",
+            opacity: 1,
+            transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } 
           }}
-          className="fixed inset-0 bg-[#070b14] z-[9999] flex flex-col items-center justify-center"
+          className="fixed inset-0 bg-[#10121A] z-[9999] flex flex-col items-center justify-center"
         >
           {/* Centered Greeting Text Container */}
           <div className="relative w-full h-24 flex items-center justify-center overflow-hidden">

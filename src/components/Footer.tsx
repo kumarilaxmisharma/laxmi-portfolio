@@ -29,7 +29,7 @@ export function Footer() {
   return (
     <footer className="relative pt-24 overflow-hidden bg-background">
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-dots opacity-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />

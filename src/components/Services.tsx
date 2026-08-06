@@ -102,8 +102,8 @@ export function Services() {
             >
               <Card className="glass-card border-white/10 hover:border-white/30 transition-all duration-300 hover-lift h-full group bg-transparent">
                 <CardHeader>
-                  <div className="w-14 h-14 rounded-xl bg-white/10 p-[1px] mb-4 group-hover:bg-white/20 transition-colors flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-blue-light" />
+                  <div className="w-12 h-12 rounded-2xl bg-[#4F46E5] mb-4 flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                    <service.icon className="w-5 h-5 text-white" strokeWidth={2.5} />
                   </div>
                   <CardTitle className="text-xl text-white group-hover:text-blue-light transition-colors">
                     {service.title}
@@ -143,8 +143,8 @@ export function Services() {
             </h3>
             <div className="grid md:grid-cols-3 gap-8 mt-8">
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-blue flex items-center justify-center mb-4">
-                  <Monitor className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-[#4F46E5] flex items-center justify-center mb-4 shadow-lg">
+                  <Monitor className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
                 <h4 className="font-semibold text-white">Modern Solutions</h4>
                 <p className="text-sm text-white/60">
@@ -152,8 +152,8 @@ export function Services() {
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-white flex items-center justify-center mb-4">
-                  <Layers className="w-6 h-6 text-blue" />
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-white flex items-center justify-center mb-4 shadow-lg">
+                  <Layers className="w-5 h-5 text-[#4F46E5]" strokeWidth={2.5} />
                 </div>
                 <h4 className="font-semibold text-white">Clean Code</h4>
                 <p className="text-sm text-white/60">
@@ -161,8 +161,8 @@ export function Services() {
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-blue flex items-center justify-center mb-4">
-                  <Zap className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-[#4F46E5] flex items-center justify-center mb-4 shadow-lg">
+                  <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
                 <h4 className="font-semibold text-white">Fast Delivery</h4>
                 <p className="text-sm text-white/60">

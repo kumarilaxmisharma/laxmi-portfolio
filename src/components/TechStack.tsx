@@ -76,8 +76,7 @@ export function TechStack() {
   return (
     <section id="techstack" className="py-24 relative overflow-hidden">
       {/* Background */}
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-dots opacity-20" />
+      <div className="absolute inset-0 bg-grid opacity-10" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
 
