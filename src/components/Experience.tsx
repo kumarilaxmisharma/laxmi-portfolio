@@ -57,23 +57,23 @@ const education = [
 ];
 
 const certifications = [
-  { 
-    name: "React Developer Certification", 
-    issuer: "Coursera", 
+  {
+    name: "Object-Oriented Programming in Python",
+    issuer: "DataCamp",
     year: "2024",
-    link: "https://www.coursera.org" // Placeholder, you can update this link later
+    link: "/certificate_oop_datacamp.pdf"
   },
-  { 
-    name: "Fundamental of Project Management", 
-    issuer: "freeCodeCamp", 
-    year: "2023",
-    link: "https://coursera.org/share/a876a9eef52d50b89384fb84b77b2b71"
+  {
+    name: "Fundamental Project Management",
+    issuer: "Coursera",
+    year: "2024",
+    link: "/Coursera Project Management.pdf"
   },
-  { 
-    name: "Responsive Web Design", 
-    issuer: "freeCodeCamp", 
-    year: "2023",
-    link: "https://www.freecodecamp.org"
+  {
+    name: "JCI Graduation",
+    issuer: "JCI",
+    year: "2025",
+    link: "/jci_graduation.jpg"
   },
 ];
 
@@ -82,9 +82,19 @@ export function Experience() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const allExperiences = [...experiences, ...education].sort((a, b) => {
-    const yearA = parseInt(a.period.split(" - ")[1] === "Present" ? "2099" : a.period.split(" - ")[1]);
-    const yearB = parseInt(b.period.split(" - ")[1] === "Present" ? "2099" : b.period.split(" - ")[1]);
-    return yearB - yearA;
+    // Primary: Work always before education
+    if (a.type === "work" && b.type !== "work") return -1;
+    if (b.type === "work" && a.type !== "work") return 1;
+
+    // Secondary: Sort by end year descending
+    const endYearA = parseInt(a.period.split(" - ")[1] === "Present" ? "2099" : a.period.split(" - ")[1]);
+    const endYearB = parseInt(b.period.split(" - ")[1] === "Present" ? "2099" : b.period.split(" - ")[1]);
+    if (endYearB !== endYearA) return endYearB - endYearA;
+    
+    // Tertiary: sort by start year descending
+    const startYearA = parseInt(a.period.split(" - ")[0]);
+    const startYearB = parseInt(b.period.split(" - ")[0]);
+    return startYearB - startYearA;
   });
 
   return (

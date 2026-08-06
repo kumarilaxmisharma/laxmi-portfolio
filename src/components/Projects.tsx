@@ -8,6 +8,17 @@ import { Button } from "@/components/ui/button";
 
 const projects = [
   {
+    title: "RNSG CRM (Internal Operations Management)",
+    type: "Enterprise Software",
+    description: "A secure, role-based internal management system built for a corporate client to streamline their daily operations.",
+    image: "/rnsg/auth.png",
+    tags: ["Next.js", "TypeScript", "Tailwind", "Internal Tool"],
+    category: "fullstack",
+    link: "/projects/internal-system",
+    linkLabel: "Read Case Study (Confidential)",
+    glowColor: "rgba(100, 116, 139, 0.25)",
+  },
+  {
     title: "Denteeth",
     type: "AI Dental Assistant",
     description: "A framework focused on zero re-renders for React apps, optimising performance.",
@@ -18,33 +29,12 @@ const projects = [
     linkLabel: "View on GitHub",
     glowColor: "rgba(99, 102, 241, 0.25)", // Indigo glow
   },
-  {
-    title: "Bespoke",
-    type: "Automotive Styling",
-    description: "Premium wrap and protection booking dashboard with interactive customizer.",
-    image: "/project-tasks.jpg",
-    tags: ["Next.js", "TailwindCSS", "Framer Motion"],
-    category: "frontend",
-    link: "https://github.com/kumarilaxmisharma",
-    linkLabel: "View Case Study",
-    glowColor: "rgba(147, 51, 234, 0.25)", // Purple glow
-  },
-  {
-    title: "Automedics",
-    type: "Automotive Repair",
-    description: "A digital booking and diagnostics hub for automated vehicle repairs.",
-    image: "/project-portfolio.jpg",
-    tags: ["Next.js", "PostgreSQL", "Node.js"],
-    category: "fullstack",
-    link: "https://github.com/kumarilaxmisharma",
-    linkLabel: "View Case Study",
-    glowColor: "rgba(245, 158, 11, 0.25)", // Amber glow
-  },
+
   {
     title: "tinh mac ecommerce",
     type: "E-commerce",
     description: "Ecommerce website for Mac products with real-time stock updates and user authentication.",
-    image: "/project-weather.jpg",
+    image: "/rnsg/thumbnail.png",
     tags: ["React", "Tailwind", "Sadcn"],
     category: "fullstack",
     link: "https://tinh-mac-new.vercel.app",
@@ -124,13 +114,15 @@ export function Projects() {
           layout
           className="grid md:grid-cols-2 gap-8"
         >
-          {filteredProjects.map((project, index) => (
-            <motion.a
-              key={project.title}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              layout
+          {filteredProjects.map((project, index) => {
+            const isInternal = project.link.startsWith("/");
+            return (
+              <motion.a
+                key={project.title}
+                href={project.link}
+                target={isInternal ? undefined : "_blank"}
+                rel={isInternal ? undefined : "noopener noreferrer"}
+                layout
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: 30 }}
@@ -180,7 +172,8 @@ export function Projects() {
                 </span>
               </div>
             </motion.a>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* View More Button */}

@@ -2,15 +2,11 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { User, MapPin, Calendar, GraduationCap, Target, Heart } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Calendar, GraduationCap, Target, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-const stats = [
-  { label: "Years Experience", value: "1+" },
-  { label: "Projects Completed", value: "10+" },
-  { label: "Technologies", value: "15+" },
-  { label: "Happy Clients", value: "5+" },
-];
+
 
 const highlights = [
   { icon: Target, text: "Focused on clean, maintainable code" },
@@ -63,30 +59,16 @@ export function About() {
               
               {/* Main Image Container */}
               <div className="relative glass-card rounded-2xl p-8 overflow-hidden">
-                <div className="aspect-square rounded-xl bg-white/5 flex items-center justify-center">
-                  <User className="w-32 h-32 text-white/30" />
+                <div className="aspect-square rounded-xl overflow-hidden relative">
+                  <Image
+                    src="/profile.jpg"
+                    alt="Laxmi Sharma — About Me"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
                 </div>
-                
-                {/* Floating Stats Cards */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.5, type: "spring" }}
-                  className="absolute -top-4 -right-4 glass-card rounded-xl p-4 shadow-xl"
-                >
-                  <div className="text-2xl font-bold text-white">1+</div>
-                  <div className="text-xs text-white/60">Years Exp.</div>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.7, type: "spring" }}
-                  className="absolute -bottom-4 -left-4 glass-card rounded-xl p-4 shadow-xl"
-                >
-                  <div className="text-2xl font-bold text-white">10+</div>
-                  <div className="text-xs text-white/60">Projects</div>
-                </motion.div>
               </div>
             </div>
           </motion.div>
@@ -121,7 +103,7 @@ export function About() {
                 <MapPin className="w-5 h-5 text-blue-light" />
                 <div>
                   <div className="text-xs text-white/60">Location</div>
-                  <div className="text-sm font-medium text-white">Your City, Country</div>
+                  <div className="text-sm font-medium text-white">Phnom Penh, Cambodia</div>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg glass-card">
@@ -153,28 +135,7 @@ export function About() {
           </motion.div>
         </div>
 
-        {/* Stats Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
-        >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.7 + index * 0.1 }}
-              className="text-center p-6 rounded-2xl glass-card hover-lift"
-            >
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-white/60">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+
       </div>
     </section>
   );

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -117,9 +116,8 @@ export function Navbar() {
         </a>
       </div>
 
-      {/* Top right buttons (ThemeToggle + Hamburger menu trigger) */}
+      {/* Top right buttons (Hamburger menu trigger) */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
-        <ThemeToggle />
         
         {/* Floating circular hamburger button */}
         <button
