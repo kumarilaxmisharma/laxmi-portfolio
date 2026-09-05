@@ -65,12 +65,12 @@ export function Services() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="py-24 relative overflow-hidden">
+    <section id="services" className="py-24 relative overflow-hidden section-alt">
       {/* Background */}
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-20" />
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple/10 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -80,13 +80,13 @@ export function Services() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-blue/20 text-blue-light border-blue/30 hover:bg-blue/30">
+          <Badge className="mb-4 bg-purple/20 text-purple-light border-purple/30 hover:bg-purple/30">
             Services
           </Badge>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
             What I <span className="gradient-text">Can Do</span>
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-foreground/70 max-w-2xl mx-auto">
             Comprehensive development services to bring your vision to life
           </p>
         </motion.div>
@@ -100,15 +100,15 @@ export function Services() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="glass-card border-white/10 hover:border-white/30 transition-all duration-300 hover-lift h-full group bg-transparent">
+              <Card className="glass-card border-foreground/10 hover:border-foreground/30 transition-all duration-300 hover-lift h-full group bg-transparent">
                 <CardHeader>
-                  <div className="w-12 h-12 rounded-2xl bg-[#4F46E5] mb-4 flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                  <div className="w-12 h-12 rounded-2xl bg-purple mb-4 flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
                     <service.icon className="w-5 h-5 text-white" strokeWidth={2.5} />
                   </div>
-                  <CardTitle className="text-xl text-white group-hover:text-blue-light transition-colors">
+                  <CardTitle className="text-xl text-foreground group-hover:text-purple-light transition-colors">
                     {service.title}
                   </CardTitle>
-                  <CardDescription className="text-white/60">
+                  <CardDescription className="text-foreground/60">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
@@ -117,7 +117,7 @@ export function Services() {
                     {service.features.map((feature) => (
                       <span
                         key={feature}
-                        className="text-xs px-3 py-1 rounded-full bg-white/10 text-white/80 border border-white/20"
+                        className="text-xs px-3 py-1 rounded-full bg-foreground/10 text-foreground/80 border border-foreground/20"
                       >
                         {feature}
                       </span>
@@ -136,36 +136,36 @@ export function Services() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-16 p-8 rounded-2xl glass-card relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-white/5" />
+          <div className="absolute inset-0 bg-foreground/5" />
           <div className="relative z-10 text-center">
-            <h3 className="text-2xl font-bold mb-4 text-white">
+            <h3 className="text-2xl font-bold mb-4 text-foreground">
               Why Work <span className="gradient-text">With Me?</span>
             </h3>
             <div className="grid md:grid-cols-3 gap-8 mt-8">
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-[#4F46E5] flex items-center justify-center mb-4 shadow-lg">
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-purple flex items-center justify-center mb-4 shadow-lg">
                   <Monitor className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
-                <h4 className="font-semibold text-white">Modern Solutions</h4>
-                <p className="text-sm text-white/60">
+                <h4 className="font-semibold text-foreground">Modern Solutions</h4>
+                <p className="text-sm text-foreground/60">
                   Using cutting-edge technologies to build future-proof applications
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-white flex items-center justify-center mb-4 shadow-lg">
-                  <Layers className="w-5 h-5 text-[#4F46E5]" strokeWidth={2.5} />
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-foreground flex items-center justify-center mb-4 shadow-lg">
+                  <Layers className="w-5 h-5 text-background" strokeWidth={2.5} />
                 </div>
-                <h4 className="font-semibold text-white">Clean Code</h4>
-                <p className="text-sm text-white/60">
+                <h4 className="font-semibold text-foreground">Clean Code</h4>
+                <p className="text-sm text-foreground/60">
                   Writing maintainable, scalable, and well-documented code
                 </p>
               </div>
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-2xl bg-[#4F46E5] flex items-center justify-center mb-4 shadow-lg">
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-purple flex items-center justify-center mb-4 shadow-lg">
                   <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
                 </div>
-                <h4 className="font-semibold text-white">Fast Delivery</h4>
-                <p className="text-sm text-white/60">
+                <h4 className="font-semibold text-foreground">Fast Delivery</h4>
+                <p className="text-sm text-foreground/60">
                   Efficient workflow ensuring timely delivery without compromising quality
                 </p>
               </div>

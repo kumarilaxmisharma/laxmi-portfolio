@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -67,6 +68,7 @@ const linkVariants = {
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,6 +83,9 @@ export function Navbar() {
           }
         }
       }
+
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -100,6 +105,12 @@ export function Navbar() {
 
   return (
     <>
+      {/* Scroll progress indicator */}
+      <div
+        className="fixed top-0 left-0 h-[3px] z-50 pointer-events-none bg-gradient-to-r from-blue to-purple"
+        style={{ width: `${scrollProgress}%` }}
+      />
+
       {/* Brand logo fixed in the top-left */}
       <div className="fixed top-6 left-6 z-50">
         <a
@@ -110,7 +121,7 @@ export function Navbar() {
           }}
           className="flex items-center gap-2 group"
         >
-          <div className="relative w-10 h-10 rounded-lg overflow-hidden transition-all duration-300 bg-white/5 border border-white/10 group-hover:scale-105">
+          <div className="relative w-10 h-10 rounded-lg overflow-hidden transition-all duration-300 bg-foreground/5 border border-foreground/10 group-hover:scale-105">
             <Image src="/2.svg" alt="Laxmi Logo" width={40} height={40} className="w-full h-full object-cover" />
           </div>
         </a>
@@ -118,7 +129,9 @@ export function Navbar() {
 
       {/* Top right buttons (Hamburger menu trigger) */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
-        
+
+        <ThemeToggle />
+
         {/* Floating circular hamburger button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -169,11 +182,11 @@ export function Navbar() {
               animate="opened"
               exit="closed"
               variants={menuVariants}
-              className="fixed top-0 right-0 h-screen w-full sm:w-[450px] bg-slate-950 border-l border-white/10 z-40 flex flex-col justify-between p-8 sm:p-12 shadow-2xl overflow-y-auto"
+              className="fixed top-0 right-0 h-screen w-full sm:w-[450px] bg-background border-l border-foreground/10 z-40 flex flex-col justify-between p-8 sm:p-12 shadow-2xl overflow-y-auto"
             >
               {/* Top Padding to clear the floating buttons */}
               <div className="pt-20">
-                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 block mb-8">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-foreground/40 block mb-8">
                   Navigation
                 </span>
                 
@@ -189,7 +202,7 @@ export function Navbar() {
                           <span className={`transition-all duration-300 ${
                             isActive
                               ? "text-blue-light pl-6"
-                              : "text-white hover:text-blue-light hover:pl-6"
+                              : "text-foreground hover:text-blue-light hover:pl-6"
                           }`}>
                             {item.name}
                           </span>
@@ -210,8 +223,8 @@ export function Navbar() {
               </div>
 
               {/* Socials Section */}
-              <div className="mt-12 pt-6 border-t border-white/5">
-                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 block mb-4">
+              <div className="mt-12 pt-6 border-t border-foreground/5">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-foreground/40 block mb-4">
                   Socials
                 </span>
                 <div className="flex flex-wrap gap-x-6 gap-y-2">
@@ -221,7 +234,7 @@ export function Navbar() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-white/60 hover:text-white transition-colors cursor-pointer"
+                      className="text-sm font-semibold text-foreground/60 hover:text-white transition-colors cursor-pointer"
                       whileHover={{ y: -2 }}
                     >
                       {social.name}

@@ -1,10 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Send, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PixelIcon } from "@/components/PixelIcon";
+import { DotPattern } from "@/components/ui/dot-pattern";
+import { cn } from "@/lib/utils";
 
 export function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Content recedes (fades, lifts, shrinks) as the user scrolls past the Hero,
+  // while the background text zooms in - a parallax exit.
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const bgTextScale = useTransform(scrollYProgress, [0, 1], [1, 1.4]);
+  const bgTextOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
   const scrollToSection = (href: string) => {
     const element = document.getElementById(href.replace("#", ""));
     if (element) {
@@ -14,12 +32,25 @@ export function Hero() {
 
   return (
     <section
+      ref={heroRef}
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background"
     >
 
-      {/* Large Glassmorphic Background Text */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+      {/* Dot pattern background, fading out toward the edges */}
+      <DotPattern
+        cr={1.5}
+        className={cn(
+          "fill-foreground/20",
+          "[mask-image:radial-gradient(650px_circle_at_center,white,transparent)]",
+        )}
+      />
+
+      {/* Large Glassmorphic Background Text - zooms in as you scroll past */}
+      <motion.div
+        style={{ scale: bgTextScale, opacity: bgTextOpacity }}
+        className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -28,17 +59,60 @@ export function Hero() {
         >
           <h1 className="text-[12vw] md:text-[14vw] lg:text-[180px] font-bold tracking-tighter select-none whitespace-nowrap"
             style={{
-              WebkitTextStroke: '2px rgba(255,255,255,0.15)',
+              WebkitTextStroke: '2px color-mix(in srgb, var(--foreground) 15%, transparent)',
               WebkitTextFillColor: 'transparent',
-              textShadow: '0 0 80px rgba(255,255,255,0.1)',
+              textShadow: '0 0 80px color-mix(in srgb, var(--foreground) 10%, transparent)',
             }}
           >
             DEVELOPER
           </h1>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Ring decorations removed for flat clean look */}
+
+      {/* Pixel-art accents */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
+        transition={{
+          opacity: { duration: 0.5, delay: 1 },
+          scale: { duration: 0.5, delay: 1, type: "spring" },
+          y: { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 },
+        }}
+        className="absolute top-[16%] left-[8%] hidden sm:block pointer-events-none"
+        style={{ rotate: -6 }}
+      >
+        <PixelIcon shape="burst" size={5} colorClassName="bg-yellow-400" className="drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1, y: [0, 12, 0] }}
+        transition={{
+          opacity: { duration: 0.5, delay: 1.2 },
+          scale: { duration: 0.5, delay: 1.2, type: "spring" },
+          y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.2 },
+        }}
+        className="absolute top-[52%] left-[5%] hidden md:block pointer-events-none"
+        style={{ rotate: 10 }}
+      >
+        <PixelIcon shape="chevron" size={6} colorClassName="bg-green-400" className="drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
+        transition={{
+          opacity: { duration: 0.5, delay: 1.4 },
+          scale: { duration: 0.5, delay: 1.4, type: "spring" },
+          y: { duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.4 },
+        }}
+        className="absolute top-[38%] right-[8%] hidden sm:block pointer-events-none"
+        style={{ rotate: 8 }}
+      >
+        <PixelIcon shape="exclaim" size={9} colorClassName="bg-blue-light" className="drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]" />
+      </motion.div>
 
       {/* Floating Orange Badge */}
       <motion.div
@@ -59,15 +133,18 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 relative z-10">
+      {/* Main Content - fades, lifts, and shrinks slightly as you scroll past */}
+      <motion.div
+        style={{ opacity: contentOpacity, y: contentY, scale: contentScale }}
+        className="container mx-auto px-6 relative z-10"
+      >
         <div className="max-w-5xl mx-auto">
           {/* Top Info Bar */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16 text-white/70 text-sm"
+            className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16 text-foreground/70 text-sm"
           >
             {["Web Development", "Flutter", "React & Next.js", "TypeScript", "Modern Stack"].map((item, i) => (
               <motion.span
@@ -90,12 +167,12 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-4"
+            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight mb-4"
               style={{ textShadow: '0 4px 30px rgba(0,0,0,0.2)' }}
             >
               KUMARI LAXMI
               <br />
-              <span className="text-white">
+              <span className="text-foreground">
                 SHARMA
               </span>
             </h2>
@@ -106,19 +183,19 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
-            className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-12 text-white"
+            className="flex flex-wrap justify-center items-center gap-8 md:gap-16 mb-12 text-foreground"
           >
             <div className="text-center">
               <div className="text-lg md:text-xl font-bold">Laxmi</div>
-              <div className="text-sm text-white/60">Junior Developer</div>
+              <div className="text-sm text-foreground/60">Junior Developer</div>
             </div>
             <div className="text-center">
               <div className="text-lg md:text-xl font-bold">Portfolio</div>
-              <div className="text-sm text-white/60">2026</div>
+              <div className="text-sm text-foreground/60">2026</div>
             </div>
             <div className="text-center">
               <div className="text-lg md:text-xl font-bold">Available</div>
-              <div className="text-sm text-white/60 flex items-center gap-1 justify-center">
+              <div className="text-sm text-foreground/60 flex items-center gap-1 justify-center">
                 For Hire
                 <span className="relative flex h-2 w-2 ml-1">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -138,7 +215,7 @@ export function Hero() {
             <Button
               size="lg"
               onClick={() => scrollToSection("#projects")}
-              className="bg-white text-blue hover:bg-white/90 transition-all shadow-lg shadow-white/20 px-8 font-semibold"
+              className="bg-foreground text-background hover:bg-foreground/90 transition-all shadow-lg shadow-foreground/20 px-8 font-semibold"
             >
               View My Work
               <ArrowDown className="w-4 h-4 ml-2" />
@@ -147,7 +224,7 @@ export function Hero() {
               size="lg"
               variant="outline"
               onClick={() => scrollToSection("#contact")}
-              className="border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8"
+              className="border-foreground/30 text-foreground hover:bg-foreground/10 hover:border-foreground/50 px-8"
             >
               Let&apos;s Connect
             </Button>
@@ -170,7 +247,7 @@ export function Hero() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 hover:border-white/40 transition-all"
+                className="w-12 h-12 rounded-xl bg-foreground/10 backdrop-blur-sm border border-foreground/20 flex items-center justify-center text-foreground/80 hover:text-foreground hover:bg-foreground/20 hover:border-foreground/40 transition-all"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
@@ -182,14 +259,14 @@ export function Hero() {
             ))}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom Corner Elements */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-8 left-8 text-white/50"
+        className="absolute bottom-8 left-8 text-foreground/50"
       >
         <div className="text-xs font-bold tracking-widest">SIMPLE</div>
         <div className="text-xs font-bold tracking-widest">DESIGN</div>
@@ -205,12 +282,12 @@ export function Hero() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2"
+          className="w-6 h-10 rounded-full border-2 border-foreground/30 flex justify-center pt-2"
         >
           <motion.div
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1.5 h-3 rounded-full bg-white/60"
+            className="w-1.5 h-3 rounded-full bg-foreground/60"
           />
         </motion.div>
       </motion.div>
@@ -242,13 +319,13 @@ export function Hero() {
           </svg>
         </motion.div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-2 h-2 rounded-full bg-white/50" />
+          <div className="w-2 h-2 rounded-full bg-foreground/50" />
         </div>
       </motion.div>
 
       {/* Dashed Line Decoration */}
       <div className="absolute bottom-0 left-0 right-0 h-px">
-        <div className="w-full h-full border-t-2 border-dashed border-white/20" />
+        <div className="w-full h-full border-t-2 border-dashed border-foreground/20" />
       </div>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Briefcase, GraduationCap, Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Briefcase, GraduationCap, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const experiences = [
@@ -77,6 +77,13 @@ const certifications = [
   },
 ];
 
+// Tints of the single site accent (var(--blue)) - never a different hue, only intensity.
+const cardTints = [
+  { bg: "var(--blue)", bold: true },
+  { bg: "color-mix(in srgb, var(--blue) 45%, white)", bold: false },
+  { bg: "color-mix(in srgb, var(--blue) 18%, white)", bold: false },
+];
+
 export function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -90,7 +97,7 @@ export function Experience() {
     const endYearA = parseInt(a.period.split(" - ")[1] === "Present" ? "2099" : a.period.split(" - ")[1]);
     const endYearB = parseInt(b.period.split(" - ")[1] === "Present" ? "2099" : b.period.split(" - ")[1]);
     if (endYearB !== endYearA) return endYearB - endYearA;
-    
+
     // Tertiary: sort by start year descending
     const startYearA = parseInt(a.period.split(" - ")[0]);
     const startYearB = parseInt(b.period.split(" - ")[0]);
@@ -102,7 +109,7 @@ export function Experience() {
       {/* Background */}
       <div className="absolute inset-0 bg-grid opacity-10" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-foreground/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
         {/* Section Header */}
@@ -112,155 +119,112 @@ export function Experience() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-white/10 text-white border-white/30 hover:bg-white/20">
+          <Badge className="mb-4 bg-foreground/10 text-foreground border-foreground/30 hover:bg-foreground/20">
             Journey
           </Badge>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white ">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground ">
             My <span className="gradient-text">Experience</span>
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-foreground/70 max-w-2xl mx-auto">
             My professional journey and educational background
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Timeline */}
-          <div className="lg:col-span-2">
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-px bg-blue/50" />
+        {/* Bold Cards + Certifications, one row */}
+        <div className="grid md:grid-cols-[2fr_2fr_2fr_1.3fr] gap-6 items-stretch">
+          {allExperiences.map((exp, index) => {
+            const tint = cardTints[index] ?? cardTints[cardTints.length - 1];
+            const textStrong = tint.bold ? "text-white" : "text-[#12172B]";
+            const textMedium = tint.bold ? "text-white/80" : "text-[#12172B]/70";
+            const textDim = tint.bold ? "text-white/60" : "text-[#12172B]/55";
+            const Icon = exp.type === "work" ? Briefcase : GraduationCap;
 
-              {/* Experience Items */}
-              <div className="space-y-8">
-                {allExperiences.map((exp, index) => (
-                  <motion.div
-                    key={`${exp.title}-${exp.company}`}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: index * 0.15 }}
-                    className="relative pl-20"
-                  >
-                    {/* Icon */}
-                    <div
-                      className={`absolute left-4 w-8 h-8 rounded-full flex items-center justify-center ${
-                        exp.current
-                          ? "bg-blue shadow-md"
-                          : "bg-white/10 border-2 border-white/30"
-                      }`}
-                    >
-                      {exp.type === "work" ? (
-                        <Briefcase className={`w-4 h-4 ${exp.current ? 'text-white' : 'text-white/70'}`} />
-                      ) : (
-                        <GraduationCap className="w-4 h-4 text-white/70" />
-                      )}
-                    </div>
+            return (
+              <motion.div
+                key={`${exp.title}-${exp.company}`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                whileHover={{ y: -6 }}
+                className="relative rounded-3xl p-6 flex flex-col justify-between overflow-hidden shadow-lg border border-foreground/5 group"
+                style={{ backgroundColor: tint.bg }}
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-10 h-10 rounded-xl bg-[#12172B] flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  {exp.current && (
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${tint.bold ? "bg-white/15 text-white" : "bg-[#12172B]/10 text-[#12172B]"}`}>
+                      Current
+                    </span>
+                  )}
+                </div>
 
-                    {/* Content Card */}
-                    <div className="p-6 rounded-2xl glass-card hover:border-white/30 transition-all group">
-                      <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-white group-hover:text-blue-light transition-colors">
-                            {exp.title}
-                          </h3>
-                          <p className="text-white/60">{exp.company}</p>
-                        </div>
-                        {exp.current && (
-                          <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
-                            Current
-                          </Badge>
-                        )}
-                      </div>
+                <div>
+                  <div className={`text-sm font-semibold mb-2 ${textDim}`}>
+                    {String(index + 1).padStart(2, "0")}.
+                  </div>
+                  <h3 className={`text-xl md:text-2xl font-bold mb-2 leading-tight ${textStrong}`}>
+                    {exp.title}
+                  </h3>
+                  <p className={`text-sm mb-4 ${textMedium}`}>
+                    {exp.company} · {exp.period}
+                  </p>
+                  <p className={`text-sm leading-relaxed mb-4 ${textMedium}`}>
+                    {exp.description}
+                  </p>
+                  <ul className="space-y-1.5">
+                    {exp.achievements.slice(0, 2).map((achievement, i) => (
+                      <li key={i} className={`flex items-start gap-2 text-xs ${textDim}`}>
+                        <span className={`w-1 h-1 rounded-full mt-1.5 shrink-0 ${tint.bold ? "bg-white/60" : "bg-[#12172B]/40"}`} />
+                        {achievement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                      <div className="flex flex-wrap gap-4 text-sm text-white/60 mb-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {exp.period}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {exp.location}
-                        </span>
-                      </div>
+                <motion.div
+                  className={`absolute bottom-6 right-6 w-9 h-9 rounded-full border flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity ${
+                    tint.bold ? "border-white/40 text-white" : "border-[#12172B]/30 text-[#12172B]"
+                  }`}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              </motion.div>
+            );
+          })}
 
-                      <p className="text-white/60 mb-4">{exp.description}</p>
-
-                      <ul className="space-y-2">
-                        {exp.achievements.map((achievement, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-light mt-2 shrink-0" />
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Certifications Sidebar */}
+          {/* Certifications - same row, narrower */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="p-5 rounded-3xl glass-card h-full"
           >
-            <div className="sticky top-24 space-y-6">
-              <div className="p-6 rounded-2xl glass-card">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                  <span className="w-2 h-2 rounded-full bg-blue-light" />
-                  Certifications
-                </h3>
-                <div className="space-y-4">
-                  {certifications.map((cert, index) => (
-                    <motion.a
-                      key={cert.name}
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group cursor-pointer block"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className="font-medium text-sm text-white group-hover:text-blue-light transition-colors">
-                            {cert.name}
-                          </h4>
-                          <p className="text-xs text-white/60 mt-1">
-                            {cert.issuer} • {cert.year}
-                          </p>
-                        </div>
-                        <ExternalLink className="w-4 h-4 text-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="p-6 rounded-2xl glass-card">
-                <h3 className="text-lg font-semibold mb-4 text-white">Quick Stats</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 rounded-xl bg-white/5">
-                    <div className="text-2xl font-bold text-white">1+</div>
-                    <div className="text-xs text-white/60">Years Exp.</div>
-                  </div>
-                  <div className="text-center p-3 rounded-xl bg-white/5">
-                    <div className="text-2xl font-bold text-white">10+</div>
-                    <div className="text-xs text-white/60">Projects</div>
-                  </div>
-                  <div className="text-center p-3 rounded-xl bg-white/5">
-                    <div className="text-2xl font-bold text-white">3</div>
-                    <div className="text-xs text-white/60">Certifications</div>
-                  </div>
-                  <div className="text-center p-3 rounded-xl bg-white/5">
-                    <div className="text-2xl font-bold text-white">15+</div>
-                    <div className="text-xs text-white/60">Technologies</div>
-                  </div>
-                </div>
-              </div>
+            <h3 className="text-sm font-semibold mb-4 flex items-center gap-2 text-foreground">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-light shrink-0" />
+              Certifications
+            </h3>
+            <div className="space-y-2.5">
+              {certifications.map((cert, index) => (
+                <motion.a
+                  key={cert.name}
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="p-2.5 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors group cursor-pointer block"
+                >
+                  <h4 className="font-medium text-xs text-foreground group-hover:text-blue-light transition-colors leading-snug">
+                    {cert.name}
+                  </h4>
+                  <p className="text-[11px] text-foreground/60 mt-0.5">
+                    {cert.issuer} • {cert.year}
+                  </p>
+                </motion.a>
+              ))}
             </div>
           </motion.div>
         </div>

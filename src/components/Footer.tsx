@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Github, Linkedin, Send } from "lucide-react";
+import { CircleSticker, CodeSticker } from "@/components/StickerBadge";
 
 const footerLinks = {
   navigation: [
@@ -19,6 +21,11 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: footerRef, offset: ["start end", "end end"] });
+  const watermarkScale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
+  const watermarkOpacity = useTransform(scrollYProgress, [0, 0.6], [0.3, 1]);
+
   const scrollToSection = (href: string) => {
     const element = document.getElementById(href.replace("#", ""));
     if (element) {
@@ -27,31 +34,37 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative pt-24 overflow-hidden bg-background">
+    <footer ref={footerRef} className="relative pt-24 overflow-hidden bg-background">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-white/10" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-foreground/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-foreground/10" />
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Large Editorial Heading */}
-        <div className="mb-16 md:mb-24">
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]">
+        <div className="mb-16 md:mb-24 flex items-start justify-between gap-8">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
             Lets create
             <br />
-            <span className="text-white/35">incredible work together.</span>
+            <span className="text-foreground/35">incredible work together.</span>
           </h2>
+
+          {/* Sticker cluster */}
+          <div className="hidden sm:flex items-center gap-4 pt-2 shrink-0">
+            <CodeSticker rotate={8} className="-mr-4 mt-8" />
+            <CircleSticker text="KUMARI LAXMI" emoji="👋" rotate={-6} />
+          </div>
         </div>
 
         {/* Middle Info Row */}
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-8 pb-12 border-b border-white/10">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-8 pb-12 border-b border-foreground/10">
           {/* Email Info */}
           <div className="space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] text-white/40 block">Email</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-foreground/40 block">Email</span>
             <a
               href="mailto:kumarilaxmisharma34@gmail.com"
-              className="text-lg md:text-xl text-white hover:text-blue-light transition-colors font-medium"
+              className="text-lg md:text-xl text-foreground hover:text-blue-light transition-colors font-medium"
             >
               kumarilaxmisharma34@gmail.com
             </a>
@@ -59,7 +72,7 @@ export function Footer() {
 
           {/* Socials Info */}
           <div className="space-y-3 sm:text-right">
-            <span className="text-xs uppercase tracking-[0.2em] text-white/40 block sm:text-right">Socials</span>
+            <span className="text-xs uppercase tracking-[0.2em] text-foreground/40 block sm:text-right">Socials</span>
             <div className="flex gap-3 justify-start sm:justify-end">
               {footerLinks.social.map((social) => (
                 <a
@@ -67,7 +80,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white text-slate-950 flex items-center justify-center hover:bg-white/80 transition-all shadow-md group cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-foreground/80 transition-all shadow-md group cursor-pointer"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
@@ -85,7 +98,7 @@ export function Footer() {
               <button
                 key={link.name}
                 onClick={() => scrollToSection(link.href)}
-                className="text-sm font-medium text-white/70 hover:text-white transition-colors cursor-pointer"
+                className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors cursor-pointer"
               >
                 {link.name}
               </button>
@@ -93,17 +106,20 @@ export function Footer() {
           </div>
 
           {/* Location & Copyright */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-x-12 gap-y-2 text-sm text-white/40 w-full md:w-auto justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-x-12 gap-y-2 text-sm text-foreground/40 w-full md:w-auto justify-between">
             <p>Based in Phnom Penh, Cambodia</p>
             <p>© {new Date().getFullYear()} Kumari Laxmi Sharma</p>
           </div>
         </div>
 
-        {/* Oversized Background Watermark Name */}
+        {/* Oversized Background Watermark Name - scales into place as the footer arrives */}
         <div className="w-full h-[10.5vw] overflow-hidden pointer-events-none select-none flex items-end justify-center">
-          <h1 className="text-[13vw] font-bold tracking-tighter text-white leading-none translate-y-[2vw] whitespace-nowrap">
+          <motion.h1
+            style={{ scale: watermarkScale, opacity: watermarkOpacity, y: "2vw" }}
+            className="text-[13vw] font-bold tracking-tighter text-foreground leading-none whitespace-nowrap"
+          >
             Laxmi Sharma
-          </h1>
+          </motion.h1>
         </div>
       </div>
     </footer>

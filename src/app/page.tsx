@@ -16,7 +16,7 @@ import { Loader } from "@/components/Loader";
 function SectionDivider() {
   return (
     <div className="relative w-full">
-      <div className="absolute inset-x-0 h-px bg-white/[0.06] pointer-events-none" />
+      <div className="absolute inset-x-0 h-px bg-foreground/[0.06] pointer-events-none" />
     </div>
   );
 }
@@ -39,10 +39,10 @@ export default function Home() {
       {showContent && (
         <div className="fixed inset-y-0 left-0 right-0 pointer-events-none z-0 flex justify-center">
           <div className="w-full max-w-[1400px] h-full flex justify-between px-6">
-            <div className="w-px h-full bg-white/[0.03]" />
-            <div className="w-px h-full bg-white/[0.03] hidden md:block" />
-            <div className="w-px h-full bg-white/[0.03] hidden md:block" />
-            <div className="w-px h-full bg-white/[0.03]" />
+            <div className="w-px h-full bg-foreground/[0.03]" />
+            <div className="w-px h-full bg-foreground/[0.03] hidden md:block" />
+            <div className="w-px h-full bg-foreground/[0.03] hidden md:block" />
+            <div className="w-px h-full bg-foreground/[0.03]" />
           </div>
         </div>
       )}
